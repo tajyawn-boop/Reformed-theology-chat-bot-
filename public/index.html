@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>개혁주의 신앙 문답 · 청년부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f4ece0;
+    --parchment-deep: #e9ddc9;
+    --ink: #2b2218;
+    --ink-soft: #5c4f3d;
+    --burgundy: #6e2a2a;
+    --burgundy-deep: #54201f;
+    --gold: #a9842f;
+    --rule: #cbb98f;
+    --card: #fbf6ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Gowun Batang', 'EB Garamond', serif;
+    background: radial-gradient(ellipse at top, #f7f0e3 0%, #ede0c9 100%);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: repeating-linear-gradient(0deg, rgba(120,90,40,0.025) 0 1px, transparent 1px 3px);
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  header {
+    text-align: center;
+    padding: 38px 0 22px;
+    border-bottom: 2px solid var(--rule);
+    position: relative;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: -5px;
+    transform: translateX(-50%);
+    width: 70px; height: 2px;
+    background: var(--gold);
+  }
+
+  .crest {
+    font-size: 13px;
+    letter-spacing: 0.32em;
+    color: var(--burgundy);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  .chat {
+    flex: 1;
+    padding: 26px 4px 12px;
+    overflow-y: auto;
+  }
+
+  .msg {
+    margin-bottom: 22px;
+    animation: rise 0.45s ease both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg .role {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .msg.user { text-align: right; }
+  .msg.user .role { color: var(--ink-soft); }
+  .msg.user .bubble {
+    display: inline-block;
+    background: var(--burgundy);
+    color: #f6ecdc;
+    padding: 12px 18px;
+    border-radius: 14px 14px 4px 14px;
+    max-width: 85%;
+    text-align: left;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    box-shadow: 0 3px 10px rgba(84,32,31,0.25);
+  }
+
+  .msg.bot .role { color: var(--burgundy); }
+  .msg.bot .bubble {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 4px 14px 14px 14px;
+    font-size: 1.04rem;
+    line-height: 1.78;
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(80,60,30,0.08);
+  }
+  .msg.bot .bubble p { margin-bottom: 10px; }
+  .msg.bot .bubble p:last-child { margin-bottom: 0; }
+  .msg.bot .bubble strong { color: var(--burgundy-deep); }
+  .msg.bot .bubble em { font-style: italic; color: var(--ink-soft); }
+  .ref {
+    display: block;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dotted var(--rule);
+    font-size: 0.86rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .suggest { margin: 4px 0 18px; }
+  .suggest .label {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 10px;
+  }
+  .chip {
+    display: inline-block;
+    margin: 0 7px 8px 0;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    font-family: 'Gowun Batang', serif;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .chip:hover {
+    background: var(--burgundy);
+    color: #f6ecdc;
+    border-color: var(--burgundy);
+    transform: translateY(-2px);
+  }
+
+  .followups {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .followups .fu {
+    padding: 6px 12px;
+    background: var(--parchment-deep);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    font-family: 'Gowun Batang', serif;
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .followups .fu:hover {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+  }
+  .followups .fu::before { content: "↳ "; opacity: 0.6; }
+
+  .typing span {
+    display: inline-block;
+    width: 7px; height: 7px;
+    margin-right: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: blink 1.3s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-4px); }
+  }
+
+  .composer {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(transparent, var(--parchment) 22%);
+    padding: 14px 0 22px;
+  }
+  .composer-inner {
+    display: flex;
+    gap: 10px;
+    background: var(--card);
+    border: 1.5px solid var(--rule);
+    border-radius: 30px;
+    padding: 6px 6px 6px 20px;
+    box-shadow: 0 4px 16px rgba(80,60,30,0.12);
+  }
+  #input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.02rem;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    padding: 9px 0;
+    max-height: 120px;
+    line-height: 1.5;
+  }
+  #input::placeholder { color: #a99877; }
+  #send {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: var(--burgundy);
+    color: #f6ecdc;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  #send:hover:not(:disabled) { background: var(--burgundy-deep); transform: scale(1.06); }
+  #send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  footer {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    padding: 4px 0 16px;
+    font-style: italic;
+  }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 1.8rem; }
+    .wrap { padding: 0 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="crest">✦ Soli Deo Gloria ✦</div>
+    <h1>개혁주의 신앙 문답</h1>
+    <p class="subtitle">청년·청소년을 위한 신앙 안내 — 궁금한 건 무엇이든</p>
+  </header>
+
+  <div class="chat" id="chat">
+    <div class="msg bot">
+      <div class="role">길벗</div>
+      <div class="bubble">
+        <p>안녕! 이곳은 <strong>개혁주의 신앙</strong>에 대해 편하게 묻고 답하는 공간이야.</p>
+        <p>"예정론이 뭔지", "구원의 확신이 안 들 때 어떡하는지", "내 진로도 하나님이 정하셨는지"… 신앙에 대한 솔직한 질문 무엇이든 환영해. 아래 버튼을 눌러 시작해도 좋아.</p>
+      </div>
+    </div>
+
+    <div class="suggest" id="suggest">
+      <div class="label">— 이런 게 궁금하지 않아? —</div>
+      <button class="chip">개혁주의 신앙이 뭐예요?</button>
+      <button class="chip">예정론을 믿으면 전도는 왜 해요?</button>
+      <button class="chip">구원의 확신이 안 들 때는 어떡하죠?</button>
+      <button class="chip">내 진로도 하나님이 다 정해두셨나요?</button>
+      <button class="chip">TULIP이 뭔가요? 쉽게 알려주세요</button>
+      <button class="chip">기도해도 안 바뀌면 의미가 있나요?</button>
+      <button class="chip">'오직 은혜'는 무슨 뜻이에요?</button>
+      <button class="chip">힘들 때 하나님의 주권이 위로가 되나요?</button>
+    </div>
+  </div>
+
+  <div class="composer">
+    <div class="composer-inner">
+      <textarea id="input" rows="1" placeholder="신앙에 대해 궁금한 점을 적어 줘…"></textarea>
+      <button id="send" aria-label="보내기">➤</button>
+    </div>
+  </div>
+
+  <footer>이 안내는 신앙 학습을 돕기 위한 것이야. 더 깊은 고민은 교회 공동체와 목회자 선생님과 함께 나누길 권해.</footer>
+</div>
+
+<script>
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('input');
+  const send = document.getElementById('send');
+  const suggest = document.getElementById('suggest');
+
+  // 대화 기록 — 매 요청마다 서버로 전체 전달
+  const history = [];
+
+  function escapeHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function parseResponse(raw) {
+    let followups = [];
+    let body = raw;
+
+    const m = body.match(/\[추천\]\s*(.+)\s*$/m);
+    if (m) {
+      followups = m[1].split('|').map(s => s.trim()).filter(Boolean).slice(0, 3);
+      body = body.replace(m[0], '').trim();
+    }
+
+    let safe = escapeHtml(body);
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    const parts = safe.split(/\n+/);
+    let html = '', ref = '';
+    for (const p of parts) {
+      if (/^\s*\[참고\]/.test(p)) {
+        ref = '<span class="ref">' + p.replace(/^\s*\[참고\]\s*/, '✦ ') + '</span>';
+      } else if (p.trim()) {
+        html += '<p>' + p.trim() + '</p>';
+      }
+    }
+    return { html: html + ref, followups };
+  }
+
+  function addMessage(role, contentHTML, followups) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + role;
+    div.innerHTML =
+      '<div class="role">' + (role === 'user' ? '질문' : '길벗') + '</div>' +
+      '<div class="bubble">' + contentHTML + '</div>';
+
+    if (followups && followups.length) {
+      const fuWrap = document.createElement('div');
+      fuWrap.className = 'followups';
+      followups.forEach(q => {
+        const b = document.createElement('button');
+        b.className = 'fu';
+        b.textContent = q;
+        b.addEventListener('click', () => ask(q));
+        fuWrap.appendChild(b);
+      });
+      div.querySelector('.bubble').appendChild(fuWrap);
+    }
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = 'typing';
+    div.innerHTML =
+      '<div class="role">길벗</div>' +
+      '<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  async function ask(question) {
+    if (!question || !question.trim()) return;
+    if (suggest) suggest.style.display = 'none';
+
+    addMessage('user', escapeHtml(question));
+    history.push({ role: 'user', content: question });
+
+    input.value = '';
+    input.style.height = 'auto';
+    send.disabled = true;
+    showTyping();
+
+    try {
+      // 이제 Anthropic이 아니라 우리 서버리스 함수(/api/chat)를 호출합니다.
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history })
+      });
+
+      const data = await response.json();
+      removeTyping();
+
+      if (!response.ok || !data.answer) {
+        addMessage('bot', '<p><em>' + escapeHtml(data.error || '답변을 가져오지 못했어. 다시 시도해 줘.') + '</em></p>');
+        return;
+      }
+
+      const parsed = parseResponse(data.answer);
+      addMessage('bot', parsed.html, parsed.followups);
+      history.push({ role: 'assistant', content: data.answer });
+    } catch (err) {
+      removeTyping();
+      addMessage('bot', '<p><em>연결에 문제가 생겼어. 잠시 후 다시 시도해 줘.</em></p>');
+      console.error(err);
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  }
+
+  send.addEventListener('click', () => ask(input.value));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      ask(input.value);
+    }
+  });
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  });
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => ask(c.textContent));
+  });
+</script>
+</body>
+</html>
