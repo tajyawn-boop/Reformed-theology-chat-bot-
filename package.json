@@ -1,0 +1,7 @@
+{
+  "name": "reformed-faith-chatbot-gemini",
+  "version": "1.0.0",
+  "description": "개혁주의 신앙 문답 챗봇 (청년부) — Google Gemini 버전",
+  "private": true,
+  "type": "module"
+}
